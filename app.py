@@ -245,7 +245,7 @@ for i, tab in enumerate(tabs):
             fig.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                             font_color="#f0f0f8", legend_font_size=11, height=300,
                             margin=dict(t=40,b=0,l=0,r=0))
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key=f"obj_{i}")
 
         with c2:
             if div_map[i] == "All":
@@ -265,7 +265,7 @@ for i, tab in enumerate(tabs):
             fig2.update_layout(paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
                               font_color="#f0f0f8", showlegend=False, height=300,
                               margin=dict(t=40,b=0,l=0,r=0))
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(fig2, use_container_width=True, key=f"div_{i}")
 
         # Charts row 2
         c3, c4, c5 = st.columns(3)
@@ -278,7 +278,7 @@ for i, tab in enumerate(tabs):
             fig3.update_layout(paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",
                               font_color="#f0f0f8",showlegend=False,height=250,
                               margin=dict(t=40,b=0,l=0,r=0))
-            st.plotly_chart(fig3, use_container_width=True)
+            st.plotly_chart(fig3, use_container_width=True, key=f"cpm_{i}")
 
         with c4:
             obj_ctr = tdf[tdf["ctr"]>0].groupby("objective")["ctr"].mean().reset_index()
@@ -288,7 +288,7 @@ for i, tab in enumerate(tabs):
             fig4.update_layout(paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",
                               font_color="#f0f0f8",showlegend=False,height=250,
                               margin=dict(t=40,b=0,l=0,r=0))
-            st.plotly_chart(fig4, use_container_width=True)
+            st.plotly_chart(fig4, use_container_width=True, key=f"ctr_{i}")
 
         with c5:
             if not roas_rows.empty:
@@ -303,7 +303,7 @@ for i, tab in enumerate(tabs):
                 fig5.update_layout(paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",
                                   font_color="#f0f0f8",showlegend=False,height=250,
                                   margin=dict(t=40,b=0,l=0,r=0))
-                st.plotly_chart(fig5, use_container_width=True)
+                st.plotly_chart(fig5, use_container_width=True, key=f"roas_{i}")
             else:
                 st.info("No ROAS data available for this selection.")
 
@@ -324,3 +324,4 @@ for i, tab in enumerate(tabs):
         tbl["conv_value"] = tbl["conv_value"].apply(lambda x: f"${x:,.2f}" if x else "—")
         tbl.columns = [c.replace("_"," ").title() for c in tbl.columns]
         st.dataframe(tbl, use_container_width=True, height=400)
+
